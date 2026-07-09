@@ -4,7 +4,7 @@ const categories = [
     name: "ทั้งหมด",
     title: "ทุกหมวด",
     description: "รวมวัสดุพร้อมส่ง",
-    color: "#176f72",
+    color: "#2ee6a8",
     icon: "grid"
   },
   {
@@ -12,7 +12,7 @@ const categories = [
     name: "กระเบื้อง",
     title: "Tile & Surface",
     description: "พื้น ผนัง ห้องน้ำ ครัว",
-    color: "#b45f35",
+    color: "#d9784a",
     icon: "tile"
   },
   {
@@ -20,7 +20,7 @@ const categories = [
     name: "พื้นไม้",
     title: "Flooring",
     description: "SPC ลามิเนต ไม้เอ็นจิเนียร์",
-    color: "#8c6a3d",
+    color: "#b98f52",
     icon: "floor"
   },
   {
@@ -28,7 +28,7 @@ const categories = [
     name: "สุขภัณฑ์",
     title: "Bath & Kitchen",
     description: "อ่าง ก๊อก ฝักบัว โถสุขภัณฑ์",
-    color: "#315a7d",
+    color: "#4f7fab",
     icon: "bath"
   },
   {
@@ -36,7 +36,7 @@ const categories = [
     name: "ไฟและระบบ",
     title: "Lighting",
     description: "โคมไฟ สวิตช์ สายไฟ",
-    color: "#d8a338",
+    color: "#e8b463",
     icon: "light"
   },
   {
@@ -44,7 +44,7 @@ const categories = [
     name: "สีและเคมีภัณฑ์",
     title: "Paint & Chemical",
     description: "สีทาภายใน กันซึม กาวซีเมนต์",
-    color: "#697b4b",
+    color: "#869c5f",
     icon: "paint"
   }
 ];
