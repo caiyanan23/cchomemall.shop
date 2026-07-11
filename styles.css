@@ -1019,6 +1019,22 @@ select:focus,
   color: var(--ink);
 }
 
+.contact-band.is-page {
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 76px);
+  padding-top: clamp(64px, 10vw, 120px);
+  padding-bottom: clamp(64px, 10vw, 120px);
+}
+
+.contact-band.is-page .contact-inner {
+  width: 100%;
+}
+
+.contact-band.is-page .contact-heading h2 {
+  font-size: clamp(32px, 4.4vw, 52px);
+}
+
 .contact-inner {
   display: flex;
   flex-wrap: wrap;

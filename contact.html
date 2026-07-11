@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Contact CCHOME MALL — phone and email for material orders, project quotes and delivery questions."
+    />
+    <title>ติดต่อเรา | CCHOME MALL</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="CCHOME MALL home">
+        <span class="brand-mark">CH</span>
+        <span>
+          <strong>CCHOME MALL</strong>
+          <small>Decorative Building Materials</small>
+        </span>
+      </a>
+
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html#categories">หมวดหมู่</a>
+        <a href="index.html#products">สินค้า</a>
+        <a href="index.html#services">บริการ</a>
+        <a href="index.html#trade">สำหรับช่าง/โครงการ</a>
+        <a href="contact.html">ติดต่อเรา</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" aria-label="Choose language" title="Language">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+            <path d="M3.6 9h16.8M3.6 15h16.8M12 3c2.1 2.2 3.2 5.2 3.2 9S14.1 18.8 12 21c-2.1-2.2-3.2-5.2-3.2-9S9.9 5.2 12 3Z" />
+          </svg>
+        </button>
+        <a class="cart-button" href="index.html" aria-label="Go to cart">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M6.3 6h15l-1.8 8.2a2 2 0 0 1-2 1.6H8.8a2 2 0 0 1-2-1.6L5.3 3.8H2.8" />
+            <path d="M9 20a.7.7 0 1 0 0-1.4A.7.7 0 0 0 9 20ZM18 20a.7.7 0 1 0 0-1.4.7.7 0 0 0 0 1.4Z" />
+          </svg>
+          <span data-cart-count>0</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="contact-band is-page">
+        <div class="contact-inner reveal">
+          <div class="contact-heading">
+            <p class="eyebrow">Get in touch</p>
+            <h2>ติดต่อเรา</h2>
+            <p class="contact-copy">ทีมงาน CCHOME MALL พร้อมให้คำปรึกษาเรื่องวัสดุ ราคา และการจัดส่ง ติดต่อได้ทั้งทางโทรศัพท์และอีเมล</p>
+          </div>
+          <div class="contact-cards">
+            <a class="contact-card" href="tel:+66632158886">
+              <span class="contact-icon">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M5 4h3.6l1.6 4.4-2 1.6a12.4 12.4 0 0 0 5.8 5.8l1.6-2 4.4 1.6V19a2 2 0 0 1-2 2C10.6 21 3 13.4 3 6a2 2 0 0 1 2-2Z" />
+                </svg>
+              </span>
+              <span>
+                <strong>โทรศัพท์</strong>
+                <small>+66 632 158 886</small>
+              </span>
+            </a>
+            <a class="contact-card" href="mailto:contact@cchomemall.shop">
+              <span class="contact-icon">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M4 6h16v12H4zM4 6l8 7 8-7" />
+                </svg>
+              </span>
+              <span>
+                <strong>อีเมล</strong>
+                <small>contact@cchomemall.shop</small>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="contact-band" style="padding-top: 0;">
+      <p class="footer-note">© 2026 CCHOME MALL. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in-view"));
+
+      const header = document.querySelector(".site-header");
+      const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 12);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      const cartCount = document.querySelector("[data-cart-count]");
+      if (cartCount) {
+        const cart = JSON.parse(localStorage.getItem("cchome-cart") || "{}");
+        const count = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+        cartCount.textContent = count;
+      }
+    </script>
+  </body>
+</html>
