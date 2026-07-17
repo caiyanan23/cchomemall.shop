@@ -1375,8 +1375,7 @@ select:focus,
     min-width: 0;
   }
 
-  .brand small,
-  .header-actions .icon-button {
+  .brand small {
     display: none;
   }
 
