@@ -155,6 +155,8 @@ const shippingByZone = {
   Isan: 390
 };
 
+const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbwO9ObLx8WE8NBURaSwxSl8opIHYwqgnbbs3mFYP_qoyFE3pfkk3hGu7zISXxREKVAIVQ/exec";
+
 const state = {
   category: "all",
   query: "",
@@ -182,7 +184,12 @@ const els = {
   subtotal: document.querySelector("[data-subtotal]"),
   shipping: document.querySelector("[data-shipping]"),
   total: document.querySelector("[data-total]"),
-  toast: document.querySelector("[data-toast]")
+  toast: document.querySelector("[data-toast]"),
+  checkoutButton: document.querySelector("[data-checkout]"),
+  orderName: document.querySelector("[data-order-name]"),
+  orderPhone: document.querySelector("[data-order-phone]"),
+  orderAddress: document.querySelector("[data-order-address]"),
+  orderNote: document.querySelector("[data-order-note]")
 };
 
 const money = new Intl.NumberFormat("th-TH", {
@@ -427,6 +434,68 @@ function showToast(message) {
   showToast.timer = window.setTimeout(() => els.toast.classList.remove("show"), 2200);
 }
 
+async function handleCheckout() {
+  const rows = getCartRows();
+  if (!rows.length) {
+    showToast("ตะกร้ายังว่าง เลือกสินค้าก่อนสั่งซื้อ");
+    return;
+  }
+
+  const name = els.orderName.value.trim();
+  const phone = els.orderPhone.value.trim();
+  const address = els.orderAddress.value.trim();
+
+  if (!name || !phone || !address) {
+    showToast("กรอกชื่อ เบอร์โทร และที่อยู่ให้ครบก่อนสั่งซื้อ");
+    return;
+  }
+
+  if (!ORDER_ENDPOINT) {
+    showToast("ทีมขายจะใช้รายการนี้จัดทำใบเสนอราคา");
+    return;
+  }
+
+  const subtotal = rows.reduce((sum, row) => sum + row.product.price * row.qty, 0);
+  const shipping = shippingByZone[state.deliveryZone];
+  const payload = {
+    name,
+    phone,
+    address,
+    note: els.orderNote.value.trim(),
+    deliveryZone: state.deliveryZone,
+    items: rows.map((row) => ({ name: row.product.name, qty: row.qty, price: row.product.price })),
+    subtotal,
+    shipping,
+    total: subtotal + shipping
+  };
+
+  els.checkoutButton.disabled = true;
+  els.checkoutButton.textContent = "กำลังส่งคำสั่งซื้อ...";
+
+  try {
+    await fetch(ORDER_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+
+    showToast("สั่งซื้อสำเร็จ ทีมงานจะติดต่อกลับเร็ว ๆ นี้");
+    state.cart = {};
+    persistCart();
+    renderCart();
+    els.orderName.value = "";
+    els.orderPhone.value = "";
+    els.orderAddress.value = "";
+    els.orderNote.value = "";
+  } catch (err) {
+    showToast("ส่งคำสั่งซื้อไม่สำเร็จ ลองใหม่อีกครั้ง");
+  } finally {
+    els.checkoutButton.disabled = false;
+    els.checkoutButton.textContent = "ดำเนินการขอใบเสนอราคา";
+  }
+}
+
 document.addEventListener("click", (event) => {
   const categoryButton = event.target.closest("[data-category]");
   if (categoryButton) setCategory(categoryButton.dataset.category);
@@ -451,7 +520,7 @@ document.addEventListener("click", (event) => {
   }
 
   if (event.target.closest("[data-checkout]")) {
-    showToast("ทีมขายจะใช้รายการนี้จัดทำใบเสนอราคา");
+    handleCheckout();
   }
 });
 

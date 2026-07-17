@@ -723,19 +723,28 @@ input[type="range"] {
 }
 
 select,
-.trade-form input {
+.trade-form input,
+.order-form input,
+.order-form textarea {
   min-height: 44px;
   width: 100%;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--ink);
-  padding: 0 12px;
+  padding: 10px 12px;
   transition: border-color 240ms var(--ease), box-shadow 240ms var(--ease);
 }
 
+.order-form textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
 select:focus,
-.trade-form input:focus {
+.trade-form input:focus,
+.order-form input:focus,
+.order-form textarea:focus {
   outline: none;
   border-color: var(--teal);
   box-shadow: 0 0 0 3px rgba(46, 230, 168, 0.18);
@@ -1294,6 +1303,24 @@ select:focus,
 .cart-summary .total {
   color: var(--ink);
   font-size: 20px;
+}
+
+.cart-summary .order-form {
+  display: grid;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.order-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.order-form textarea {
+  min-height: 60px;
 }
 
 .toast {

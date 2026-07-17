@@ -267,6 +267,26 @@
           <div><span>สินค้า</span><strong data-subtotal>฿0</strong></div>
           <div><span>จัดส่งโดยประมาณ</span><strong data-shipping>฿0</strong></div>
           <div class="total"><span>รวม</span><strong data-total>฿0</strong></div>
+
+          <div class="order-form">
+            <label>
+              ชื่อ-นามสกุล
+              <input type="text" data-order-name placeholder="ชื่อผู้สั่งซื้อ" autocomplete="name" />
+            </label>
+            <label>
+              เบอร์โทร
+              <input type="tel" data-order-phone placeholder="08X-XXX-XXXX" autocomplete="tel" />
+            </label>
+            <label>
+              ที่อยู่จัดส่ง
+              <textarea data-order-address placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด" rows="2"></textarea>
+            </label>
+            <label>
+              หมายเหตุ (ถ้ามี)
+              <input type="text" data-order-note placeholder="เช่น เวลาที่สะดวกให้จัดส่ง" />
+            </label>
+          </div>
+
           <button type="button" data-checkout>ดำเนินการขอใบเสนอราคา</button>
         </div>
       </section>
