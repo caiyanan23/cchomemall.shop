@@ -160,7 +160,6 @@ const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbwO9ObLx8WE8NBUR
 const state = {
   category: "all",
   query: "",
-  maxPrice: 3000,
   sort: "recommended",
   deliveryZone: "Bangkok",
   cart: JSON.parse(localStorage.getItem("cchome-cart") || "{}")
@@ -173,17 +172,12 @@ const els = {
   resultTitle: document.querySelector("[data-result-title]"),
   searchForm: document.querySelector("[data-search-form]"),
   searchInput: document.querySelector("#site-search"),
-  priceRange: document.querySelector("[data-price-range]"),
-  priceLabel: document.querySelector("[data-price-label]"),
   sort: document.querySelector("[data-sort]"),
   deliveryZone: document.querySelector("[data-delivery-zone]"),
   clearFilters: document.querySelector("[data-clear-filters]"),
   cartDrawer: document.querySelector("[data-cart-drawer]"),
   cartCount: document.querySelector("[data-cart-count]"),
   cartItems: document.querySelector("[data-cart-items]"),
-  subtotal: document.querySelector("[data-subtotal]"),
-  shipping: document.querySelector("[data-shipping]"),
-  total: document.querySelector("[data-total]"),
   toast: document.querySelector("[data-toast]"),
   checkoutButton: document.querySelector("[data-checkout]"),
   orderName: document.querySelector("[data-order-name]"),
@@ -191,12 +185,6 @@ const els = {
   orderAddress: document.querySelector("[data-order-address]"),
   orderNote: document.querySelector("[data-order-note]")
 };
-
-const money = new Intl.NumberFormat("th-TH", {
-  style: "currency",
-  currency: "THB",
-  maximumFractionDigits: 0
-});
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -288,14 +276,11 @@ function getFilteredProducts() {
   const query = state.query.trim().toLowerCase();
   const visible = products.filter((product) => {
     const inCategory = state.category === "all" || product.category === state.category;
-    const inPrice = product.price <= state.maxPrice;
     const inQuery = !query || `${product.name} ${product.badge} ${product.stock}`.toLowerCase().includes(query);
-    return inCategory && inPrice && inQuery;
+    return inCategory && inQuery;
   });
 
   const sorted = [...visible];
-  if (state.sort === "price-low") sorted.sort((a, b) => a.price - b.price);
-  if (state.sort === "price-high") sorted.sort((a, b) => b.price - a.price);
   if (state.sort === "rating") sorted.sort((a, b) => b.rating - a.rating);
   return sorted;
 }
@@ -313,7 +298,7 @@ function renderProducts() {
     els.productGrid.innerHTML = `
       <div class="empty-state">
         <h3>ไม่พบสินค้าที่ตรงกับตัวกรอง</h3>
-        <p>ลองเพิ่มช่วงราคา หรือเลือกหมวดหมู่อื่น</p>
+        <p>ลองใช้คำค้นอื่น หรือเลือกหมวดหมู่อื่น</p>
       </div>
     `;
     return;
@@ -336,10 +321,7 @@ function renderProducts() {
             </div>
             <h3>${product.name}</h3>
             <div class="product-foot">
-              <div>
-                <span class="price">${money.format(product.price)}</span>
-                <span class="unit">${product.unit}</span>
-              </div>
+              <span class="unit">${product.unit}</span>
               <button class="add-button" type="button" data-add="${product.id}">
                 <svg aria-hidden="true" viewBox="0 0 24 24">
                   <path d="M12 5v14M5 12h14" />
@@ -369,9 +351,6 @@ function getCartRows() {
 function renderCart() {
   const rows = getCartRows();
   const itemCount = rows.reduce((sum, row) => sum + row.qty, 0);
-  const subtotal = rows.reduce((sum, row) => sum + row.product.price * row.qty, 0);
-  const shipping = rows.length ? shippingByZone[state.deliveryZone] : 0;
-
   els.cartCount.textContent = itemCount;
   els.cartItems.innerHTML = rows.length
     ? rows
@@ -380,7 +359,7 @@ function renderCart() {
             <article class="cart-item">
               <div>
                 <h3>${product.name}</h3>
-                <p>${money.format(product.price)} ${product.unit}</p>
+                <p>${product.unit}</p>
               </div>
               <div class="qty" aria-label="Quantity for ${product.name}">
                 <button type="button" data-dec="${product.id}">−</button>
@@ -391,11 +370,7 @@ function renderCart() {
           `
         )
         .join("")
-    : `<div class="empty-state"><h3>ตะกร้ายังว่าง</h3><p>เลือกวัสดุที่ต้องการ แล้วระบบจะประเมินค่าจัดส่งให้</p></div>`;
-
-  els.subtotal.textContent = money.format(subtotal);
-  els.shipping.textContent = money.format(shipping);
-  els.total.textContent = money.format(subtotal + shipping);
+    : `<div class="empty-state"><h3>ตะกร้ายังว่าง</h3><p>เลือกวัสดุที่ต้องการ แล้วส่งรายการให้ทีมงานเสนอราคา</p></div>`;
 }
 
 function setCategory(category) {
@@ -535,12 +510,6 @@ els.searchInput.addEventListener("input", () => {
   renderProducts();
 });
 
-els.priceRange.addEventListener("input", () => {
-  state.maxPrice = Number(els.priceRange.value);
-  els.priceLabel.textContent = money.format(state.maxPrice);
-  renderProducts();
-});
-
 els.sort.addEventListener("change", () => {
   state.sort = els.sort.value;
   renderProducts();
@@ -554,11 +523,8 @@ els.deliveryZone.addEventListener("change", () => {
 els.clearFilters.addEventListener("click", () => {
   state.category = "all";
   state.query = "";
-  state.maxPrice = 3000;
   state.sort = "recommended";
   els.searchInput.value = "";
-  els.priceRange.value = "3000";
-  els.priceLabel.textContent = money.format(3000);
   els.sort.value = "recommended";
   renderCategories();
   renderProducts();

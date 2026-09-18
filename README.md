@@ -7,7 +7,7 @@ Thailand local decorative building materials ecommerce front page.
 Open `index.html` in a browser. The current version is a dependency-free static storefront with:
 
 - Thai-localized shopping entry, category discovery and product filtering
-- Search, price filter, sort and delivery zone estimate
+- Search, category/rating sort and delivery-zone selection
 - Add-to-cart drawer with quantity controls and local storage
 - Project/trade account lead form
 

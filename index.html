@@ -98,15 +98,6 @@
           </div>
 
           <div class="filter-group">
-            <span class="filter-label">ช่วงราคา</span>
-            <label class="range-label" for="price-range">
-              <span>สูงสุด</span>
-              <strong data-price-label>฿3,000</strong>
-            </label>
-            <input id="price-range" type="range" min="250" max="3000" step="50" value="3000" data-price-range />
-          </div>
-
-          <div class="filter-group">
             <span class="filter-label">พื้นที่จัดส่ง</span>
             <select data-delivery-zone aria-label="Delivery zone">
               <option value="Bangkok">Bangkok / ปริมณฑล</option>
@@ -125,8 +116,6 @@
             </div>
             <select data-sort aria-label="Sort products">
               <option value="recommended">แนะนำ</option>
-              <option value="price-low">ราคาต่ำไปสูง</option>
-              <option value="price-high">ราคาสูงไปต่ำ</option>
               <option value="rating">คะแนนสูงสุด</option>
             </select>
           </div>
@@ -258,9 +247,7 @@
         </div>
         <div class="cart-items" data-cart-items></div>
         <div class="cart-summary">
-          <div><span>สินค้า</span><strong data-subtotal>฿0</strong></div>
-          <div><span>จัดส่งโดยประมาณ</span><strong data-shipping>฿0</strong></div>
-          <div class="total"><span>รวม</span><strong data-total>฿0</strong></div>
+          <p class="quote-note">ส่งรายการสินค้าให้ทีมงานเพื่อสอบถามราคาและค่าจัดส่ง</p>
 
           <div class="order-form">
             <label>
